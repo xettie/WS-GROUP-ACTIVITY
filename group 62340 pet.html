@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Adoption</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .top-bar {
+            background: linear-gradient(90deg, #06325e, #0a3158);
+            padding: 10px 20px;
+            text-align: right;
+            font-size: 14px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .top-bar a {
+            color: #000000;  
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .top-bar a:hover {
+            text-decoration: underline;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0a2463, #1e40af)
+            padding: 18px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            color: rgb(27, 66, 82);
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        nav a {
+            color: rgb(39, 65, 122);
+            text-decoration: none;
+            margin: 0 18px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #852323;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #000000;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .icon {
+            color: rgb(175, 68, 68);
+            font-size: 22px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .icon:hover {
+            transform: scale(1.15);
+        }
+
+        .sign-in-btn {
+            background: linear-gradient(135deg, #800000, #a52a2a); 
+            color: rgb(112, 33, 33);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            box-shadow: 0 4px 8px rgba(128,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .sign-in-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(128,0,0,0.4);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(10, 36, 99, 0.7), rgba(30, 64, 175, 0.7)), url('https://images.unsplash.com/photo-1548199973-03cce0bc6a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: rgb(31, 48, 104);
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shine 6s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .search-bar {
+            display: flex;
+            max-width: 700px;
+            margin: 0 auto;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 16px 25px;
+            border: none;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, #800000, #a52a2a);
+            color: rgb(78, 25, 25);
+            border: none;
+            padding: 16px 30px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: linear-gradient(135deg, #a52a2a, #800000);
+            transform: scale(1.05);
+        }
+
+
+        .category-card {
+            background: rgb(226, 215, 215);
+            padding: 25px 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 140px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+            border-color: #1e40af;
+        }
+
+        .category-card .icon {
+            color: #1e40af;
+            font-size: 48px;
+            margin-bottom: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover .icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .category-card p {
+            color: #2d3748;
+            font-weight: 700;
+            font-size: 17px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            color: #0a2463;
+            margin: 50px 0 30px;
+            font-weight: 800;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #800000, #a52a2a);
+            border-radius: 2px;
+        }
+
+        .section-title a {
+            color: #800000;
+            text-decoration: none;
+            font-size: 18px;
+            margin-left: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .section-title a:hover {
+            margin-left: 18px;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            .hero h1 {
+                font-size: 32px;
+            }
+            .search-bar {
+                flex-direction: column;
+                border-radius: 10px;
+            }
+            .search-btn {
+                border-radius: 0 0 10px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+
+    <header>
+        <div class="logo">PET ADOPTION</div>
+        <nav>
+            <a href="#">ALL ABOUT PETS</a>
+            <a href="#">ADOPT OR GET INVOLVED</a>
+            <a href="#">OTHER TYPES OF PETS</a>
+                    <div class="search-bar">
+            <input type="text" placeholder="Search.">
+            <button style="font-size: 10px;"><i class="fas fa-search"></i></button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1 style="background-color: #5f0606; color: rgb(243, 243, 243); padding: 20px;">WELCOME TO PET ADOPTION</h1>
+        <p>Find your new best friend.</p>
+        </div>
+    </section>
+
+    <section class="categories">
+        <div class="category-card">
+            <div class="icon"><i class="fas fa-dog"></i></div>
+<a href="DOGS.HTML" class="logo" style="background-color: #ece6e6; color: rgb(0, 0, 0); font-size:14px;">DOGS</a>
+        <nav class="NAV">
+
+        </div>
+
+<section class="categories">
+        <div class="category-card">
+<div class="icon">
+    <i class="fa-solid fa-cat"></i>
+</div><a href="CATS.HTML" class="logo" style="background-color: #ece6e6; color: rgb(0, 0, 0); font-size:14px;">CATS</a>     
+       <click button "cats" ></click>
+<nav class="NAV">
+        </div>
+
+        <section class="categories">
+        <div class="category-card">
+<div class="icon">
+    <i class="fas fa-dove"></i>
+</div>
+<a href="BIRDS.HTML" class="logo" 
+style="background-color: #e2d3d3; color: rgb(0, 0, 0); font-size:14px;">
+BIRDS
+</a> <nav class="NAV">
+        </div>
+
+       <section class="categories">
+        <div class="category-card">
+<div class="icon">
+    <i class="fas fa-house"></i>
+</div><a href="SHELTERS & RESCUES.HTML" class="logo" style="background-color: #ece6e6; color: rgb(0, 0, 0); font-size:14px;">SHELTERS & RESCUES</a>
+        <nav class="NAV">
+        </div>
+
+    <section>
+        <link href="section-title.html">comment <a href="#"><i class="fas fa-chevron-right"></i></a></link>
+               <click button "comment" ></click>
+
+    </section>
+</body>
